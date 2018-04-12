@@ -23,7 +23,8 @@ add_action('rest_api_init', function () {
     (new \Alpipego\GhCp\RestRoute(new \Alpipego\GhCp\PayloadParser()))->register();
 });
 
-add_action('init', function () {
+function createGhCPT()
+{
     $postType = new \Alpipego\GhCp\PostType('ghcp', 'Github Markdown Doc', 'Github Markdown Docs');
     $postType
         ->rewrite([
@@ -38,7 +39,9 @@ add_action('init', function () {
     $postType = apply_filters('ghcp/post_type_object', $postType);
 
     $postType->create();
-});
+}
+
+add_action('init', 'createGhCPT');
 
 if ((bool)apply_filters('ghcp/code_highlighting', true)) {
     add_action('wp_enqueue_scripts', function () {
@@ -49,11 +52,11 @@ if ((bool)apply_filters('ghcp/code_highlighting', true)) {
 }
 
 register_activation_hook(__FILE__, function () {
-    add_action('init', 'flush_rewrite_rules', 100);
+    createGhCPT();
+    flush_rewrite_rules();
 });
+
 register_deactivation_hook(__FILE__, function () {
-    add_action('shutdown', function () {
-        unregister_post_type('ghcp');
-        flush_rewrite_rules();
-    });
+    unregister_post_type('ghcp');
+    flush_rewrite_rules();
 });
