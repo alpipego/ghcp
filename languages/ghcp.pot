@@ -2,9 +2,9 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Github Markdown to Custom Post 0.1.0\n"
+"Project-Id-Version: Github Markdown to Custom Post 0.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ghcp\n"
-"POT-Creation-Date: 2018-04-10 14:35:43+00:00\n"
+"POT-Creation-Date: 2018-04-12 09:37:59+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
