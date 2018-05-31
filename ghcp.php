@@ -19,8 +19,12 @@
  *
  */
 
-add_action('rest_api_init', function () {
-    (new \Alpipego\GhCp\RestRoute(new \Alpipego\GhCp\PayloadParser()))->register();
+use Alpipego\GhCp\MetaOutput;
+
+$metaDataParser = new \Alpipego\GhCp\MetaDataParser();
+
+add_action('rest_api_init', function () use ($metaDataParser) {
+    (new \Alpipego\GhCp\RestRoute(new \Alpipego\GhCp\PayloadParser($metaDataParser)))->register();
 });
 
 function createGhCPT()
@@ -48,6 +52,16 @@ if ((bool)apply_filters('ghcp/code_highlighting', true)) {
         wp_enqueue_style(
             'pygments-default',
             plugin_dir_url(__FILE__) . 'assets/github-light' . (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min') . '.css');
+    });
+}
+
+if ((bool)apply_filters('ghcp/meta/output', true)) {
+    add_action('wp', function () use ($metaDataParser) {
+        $metaOutput = new MetaOutput($metaDataParser->getInventory());
+        $metaOutput->filterTitle();
+        add_action('wp_head', function () use ($metaOutput) {
+            $metaOutput->output();
+        });
     });
 }
 
