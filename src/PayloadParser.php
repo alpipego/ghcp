@@ -19,6 +19,12 @@ class PayloadParser
      */
     private $gh;
     private $headers;
+    private $metadata;
+
+    public function __construct(MetaDataParser $metadata)
+    {
+        $this->metadata = $metadata;
+    }
 
     public function setBody(string $body) : int
     {
@@ -55,9 +61,12 @@ class PayloadParser
                         }, $meta);
                     }
 
+                    $rawBody = \Requests::get($file->raw_url)->body;
+                    $meta = array_merge($meta, $this->metadata->parse($rawBody));
+
                     if ( ! array_key_exists($file->sha, $renderedFiles)) {
                         $rendered = \Requests::post($this->gh->getUrl() . '/markdown', $this->headers, json_encode([
-                            'text'    => \Requests::get($file->raw_url)->body,
+                            'text'    => $rawBody,
                             'mode'    => 'gfm',
                             'context' => $repo,
                         ]));
@@ -94,7 +103,6 @@ class PayloadParser
                         'avatar'   => $body->author->avatar_url,
                     ];
                     $postarr['meta_input']                      = $meta;
-
 
                     return wp_insert_post($postarr);
                 }

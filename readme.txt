@@ -3,7 +3,7 @@ Contributors: alpipego
 Tags: github, markdown
 Requires at least: 4.5
 Tested up to: 4.9
-Stable tag: 0.1.1
+Stable tag: 0.3.0
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires PHP: 7.1
