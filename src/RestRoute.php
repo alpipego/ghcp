@@ -33,8 +33,7 @@ class RestRoute
     public function callback(\WP_REST_Request $request) : ?\WP_REST_Response
     {
         // Validate API Request
-        if (
-        ! hash_equals('sha1=' . hash_hmac('sha1', $request->get_body(), $this->secret), $request->get_header('x_hub_signature'))
+        if ( ! empty($this->secret) && ! hash_equals('sha1=' . hash_hmac('sha1', $request->get_body(), $this->secret), $request->get_header('x_hub_signature'))
         ) {
             return null;
         }
