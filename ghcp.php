@@ -7,7 +7,7 @@
  * Author URI: https://alexandergoller.com
  * Text Domain: ghcp
  * Domain Path: /languages
- * Version: 0.1.1
+ * Version: 0.3.0
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
  * Requires PHP: 7.1
